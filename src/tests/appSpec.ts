@@ -15,8 +15,17 @@ describe('Test endpoint responses', () => {
 
 // Test the Image processing endpoint
 describe('Test that the Resized file is generated', () => {
-  it('get /resizedImages with status of 200', () => {
-    request.post('/resizedImages').expect(200);
+  it('get ../assets/resizedImages with status of 200', () => {
+    request.post('../assets/resizedImages').expect(200);
+  });
+});
+
+// Test the path of save image has called
+describe('Test the path of save image has called', function () {
+  it('should be called', () => {
+    app.get('/', async (req, res) => {
+      expect(res.sendFile(path.join())).toHaveBeenCalled;
+    });
   });
 });
 
@@ -32,67 +41,64 @@ describe('Test the path of save image has called', function () {
   });
 });
 
-// Test the path of save image has called
-describe('Test the path of save image has called', function () {
-  it('should be called', () => {
-    app.get('/', async (req, res) => {
-      expect(res.sendFile(path.join())).toHaveBeenCalled;
-    });
-  });
-});
 
 //Test the Images
 
-// 1 : newpalmtunnel.jpg
-describe('Test the palmtunnel.jpg has resized and save in newpalmtunnel.jpg', () => {
-  it('newpalmtunnel.jpg saved in /resizedImages ', () => {
+// 1 : palmtunnel.jpg
+describe('Test the palmtunnel.jpg has resized and save in new${width}x${height}palmtunnel.jpg', () => {
+  it('new${width}x${height}palmtunnel.jpg saved in ../assets/resizedImages ', () => {
     app.get('/', async (req, res) => {
+    const {width, height } = req.query;
       expect(
-        res.sendFile(path.join('dist', 'resizedImages', 'newpalmtunnel'))
+        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}palmtunnel.jpg`))
       ).toBeTruthy();
     });
   });
 });
 
-// 2 : newencenadaport.jpg
-describe('Test the encenadaport.jpg has resized and save in newencenadaport.jpg', () => {
-  it('newencenadaport.jpg saved in /resizedImages ', () => {
+// 2 : encenadaport.jpg
+describe('Test the encenadaport.jpg has resized and save in new${width}x${height}encenadaport.jpg', () => {
+  it('new${width}x${height}encenadaport.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
+      const {width, height } = req.query;
       expect(
-        res.sendFile(path.join('dist', 'resizedImages', 'newencenadaport'))
+        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}encenadaport.jpg`))
       ).toBeTruthy();
     });
   });
 });
 
-// 3 : newfjord.jpg
-describe('Test the fjord.jpg has resized and save in newfjord.jpg', () => {
-  it('newfjord.jpg saved in /resizedImages ', () => {
+// 3 : fjord.jpg
+describe('Test the fjord.jpg has resized and save innew${width}x${height}fjord.jpg', () => {
+  it('new${width}x${height}fjord.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
+      const {width, height } = req.query;
       expect(
-        res.sendFile(path.join('dist', 'resizedImages', 'newfjord'))
+        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}fjord.jpg`))
       ).toBeTruthy();
     });
   });
 });
 
-// 4 : newicelandwaterfall.jpg
-describe('Test the icelandwaterfall.jpg has resized and save in newicelandwaterfall.jpg', () => {
-  it('newicelandwaterfall.jpg saved in /resizedImages ', () => {
+// 4 : icelandwaterfall.jpg
+describe('Test the icelandwaterfall.jpg has resized and save in new${width}x${height}icelandwaterfall.jpg', () => {
+  it('new${width}x${height}icelandwaterfall.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
+      const {width, height } = req.query;
       expect(
-        res.sendFile(path.join('dist', 'resizedImages', 'newicelandwaterfall'))
+        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}icelandwaterfall.jpg`))
       ).toBeTruthy();
     });
   });
 });
 
-// 5 : newsantamonica.jpg
-describe('Test the santamonica.jpg has resized and save in newsantamonica.jpg', () => {
-  it('newsantamonica.jpg saved in /resizedImages ', () => {
+// 5 : santamonica.jpg
+describe('Test the santamonica.jpg has resized and save in new${width}x${height}santamonica.jpg', () => {
+  it('new${width}x${height}santamonica.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
+      const {width, height } = req.query;
       expect(
-        res.sendFile(path.join('dist', 'resizedImages', 'newsantamonica'))
+        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}santamonica.jpg`))
       ).toBeTruthy();
     });
   });
