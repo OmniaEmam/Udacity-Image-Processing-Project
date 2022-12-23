@@ -13,8 +13,8 @@ app.get('/', async (req: Request, res: Response) => {
   let file = `../assets/resizedImages/new${width}x${height}${name}`;
   if (fs.existsSync(file))
   {
-    alert("the image already exist");
-    console.log("the image already exist");
+    alert('the image already exist');
+    console.log('the image already exist');
   }
   else
   {

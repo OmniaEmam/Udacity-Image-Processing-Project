@@ -41,16 +41,21 @@ describe('Test the path of save image has called', function () {
   });
 });
 
-
 //Test the Images
 
 // 1 : palmtunnel.jpg
 describe('Test the palmtunnel.jpg has resized and save in new${width}x${height}palmtunnel.jpg', () => {
   it('new${width}x${height}palmtunnel.jpg saved in ../assets/resizedImages ', () => {
     app.get('/', async (req, res) => {
-    const {width, height } = req.query;
+      const { width, height } = req.query;
       expect(
-        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}palmtunnel.jpg`))
+        res.sendFile(
+          path.join(
+            'assets',
+            'resizedImages',
+            `new${width}x${height}palmtunnel.jpg`
+          )
+        )
       ).toBeTruthy();
     });
   });
@@ -60,9 +65,15 @@ describe('Test the palmtunnel.jpg has resized and save in new${width}x${height}p
 describe('Test the encenadaport.jpg has resized and save in new${width}x${height}encenadaport.jpg', () => {
   it('new${width}x${height}encenadaport.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
-      const {width, height } = req.query;
+      const { width, height } = req.query;
       expect(
-        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}encenadaport.jpg`))
+        res.sendFile(
+          path.join(
+            'assets',
+            'resizedImages',
+            `new${width}x${height}encenadaport.jpg`
+          )
+        )
       ).toBeTruthy();
     });
   });
@@ -72,9 +83,11 @@ describe('Test the encenadaport.jpg has resized and save in new${width}x${height
 describe('Test the fjord.jpg has resized and save innew${width}x${height}fjord.jpg', () => {
   it('new${width}x${height}fjord.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
-      const {width, height } = req.query;
+      const { width, height } = req.query;
       expect(
-        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}fjord.jpg`))
+        res.sendFile(
+          path.join('assets', 'resizedImages', `new${width}x${height}fjord.jpg`)
+        )
       ).toBeTruthy();
     });
   });
@@ -84,9 +97,15 @@ describe('Test the fjord.jpg has resized and save innew${width}x${height}fjord.j
 describe('Test the icelandwaterfall.jpg has resized and save in new${width}x${height}icelandwaterfall.jpg', () => {
   it('new${width}x${height}icelandwaterfall.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
-      const {width, height } = req.query;
+      const { width, height } = req.query;
       expect(
-        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}icelandwaterfall.jpg`))
+        res.sendFile(
+          path.join(
+            'assets',
+            'resizedImages',
+            `new${width}x${height}icelandwaterfall.jpg`
+          )
+        )
       ).toBeTruthy();
     });
   });
@@ -96,9 +115,15 @@ describe('Test the icelandwaterfall.jpg has resized and save in new${width}x${he
 describe('Test the santamonica.jpg has resized and save in new${width}x${height}santamonica.jpg', () => {
   it('new${width}x${height}santamonica.jpg saved in /resizedImages ', () => {
     app.get('/', async (req, res) => {
-      const {width, height } = req.query;
+      const { width, height } = req.query;
       expect(
-        res.sendFile(path.join('assets', 'resizedImages', `new${width}x${height}santamonica.jpg`))
+        res.sendFile(
+          path.join(
+            'assets',
+            'resizedImages',
+            `new${width}x${height}santamonica.jpg`
+          )
+        )
       ).toBeTruthy();
     });
   });
