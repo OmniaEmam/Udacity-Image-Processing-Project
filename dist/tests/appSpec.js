@@ -17,11 +17,11 @@ const path_1 = __importDefault(require("path"));
 const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(app_1.default);
 describe('Test endpoint responses', () => {
-    it('should return 200 status code', () => {
-        request.get('/', (res) => __awaiter(void 0, void 0, void 0, function* () {
-            expect(res.status).toEqual(200);
-        }));
-    });
+    it('should return 200 status code', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/api/uploads', () => {
+            expect(response.status).toEqual(200);
+        });
+    }));
 });
 describe('Test that the Resized file is generated', () => {
     it('get ../assets/resizedImages with status of 200', () => {
