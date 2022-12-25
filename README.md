@@ -18,5 +18,6 @@
 ### To test the code 
 - Run ```npm run jasmine``` to run the tests cases in ```../src/tests/appSpec.ts```
 
-### To run lint
+### To run lint or prettier
 - Run ```npm run lint``` to run the tests script in ```../package.json```
+- Run ```npm run prettier``` to run the tests script in ```../package.json```
