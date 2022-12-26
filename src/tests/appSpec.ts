@@ -7,12 +7,17 @@ const request = supertest(app);
 // Test endpoint responses
 describe('Test endpoint responses', () => {
   it('should return 200 status code', async () => {
-    const response = await request.get('/api/uploads', () => {
+    const response = await request.get('/api/uploads');
       expect(response.status).toEqual(200);
     });
   });
-});
 
+  describe('Test endpoint response', () => {
+    it('should return 200 status code', async () => {
+      const response = await request.get('/api/uploads');
+      expect(response.status).toBe(200);
+    });
+  });
 
 // Test the Image processing endpoint
 describe('Test that the Resized file is generated', () => {

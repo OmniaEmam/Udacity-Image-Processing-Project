@@ -18,9 +18,14 @@ const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(app_1.default);
 describe('Test endpoint responses', () => {
     it('should return 200 status code', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api/uploads', () => {
-            expect(response.status).toEqual(200);
-        });
+        const response = yield request.get('/api/uploads');
+        expect(response.status).toEqual(200);
+    }));
+});
+describe('Test endpoint response', () => {
+    it('should return 200 status code', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/api/uploads');
+        expect(response.status).toBe(200);
     }));
 });
 describe('Test that the Resized file is generated', () => {
