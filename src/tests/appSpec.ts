@@ -3,6 +3,7 @@ import path from 'path';
 import supertest from 'supertest';
 import fs from 'fs';
 import removeExtension from '../utilities/removeExtension';
+import imageResize from '../utilities/imageResize';
 
 const request = supertest(app);
 
@@ -25,6 +26,7 @@ describe('Test endpoint response', () => {
 
 
 
+
 // Test for image processing 
 describe(' test for image processing ', () => {
   const imageName = 'palmtunnel.jpg';
@@ -33,9 +35,18 @@ describe(' test for image processing ', () => {
   const fileName: string = path.join(__dirname, '../../assets/resizedImages',
     `${removeExtension(imageName)}-${imageWidth}x${imageHeight}.jpg`);
 
+  // First ,test Resize image function
+    describe('First ,test Resize image function', () => {
+      it('resize image and save in into the right path', () => {
+        expect(async () => {
+          await imageResize(imageName, imageWidth, imageHeight);
+        }).not.toThrow();
+      });
+    });
 
-  // First , Resize image    
-  it('First , Resize image when it does not exist && not include an error', async () => {
+
+  // Second , Resize image    
+  it('Second , Resize image when it does not exist && not include an error', async () => {
     await request.get(
       `/api/uploads?name=${imageName}&width=${imageWidth}&height=${imageHeight}`
     );
@@ -44,8 +55,8 @@ describe(' test for image processing ', () => {
 
 
 
-  // Second , image include error  
-  it('Second , When image name include error', async () => {
+  // Third , image include error  
+  it('Third , When image name include error', async () => {
     const response = await request.get(
       `/api/uploads?name=KKK&width=${imageWidth}&height=${imageHeight}`
     );
@@ -56,8 +67,8 @@ describe(' test for image processing ', () => {
 
 
 
-  // Third , image ialready exist  
-  it('Third , When The image is already exist', async () => {
+  // Forth , image ialready exist  
+  it('Forth , When The image is already exist', async () => {
     const response = await request.get(
       `/api/uploads?name=${imageName}&width=100&height=100`
     );
@@ -68,8 +79,8 @@ describe(' test for image processing ', () => {
 
 
 
-  // Forth , height or width not correct
-  it('Forth , When the height or width not correct', async () => {
+  // Fifth , height or width not correct
+  it('Fifth , When the height or width not correct', async () => {
     const response = await request.get(
       `/api/uploads?name=${imageName}&width=kkk&height=${imageHeight}`
     );

@@ -40,11 +40,17 @@ appRouter.get('/uploads', async (req: Request, res: Response): Promise<void> => 
             console.log('the image already exist /assets/resizedImages');
             res.status(500);
         }
+        else 
+        {
+            res.send('please check the url from README.md again');
+            console.log('please check the url from README.md again');
+            res.status(600);
+        }
     }
     else {
         res.send('The height and width are not correct, please make sure of image name height and width');
         console.log('The height and width are not correct, please make sure of image name height and width');
-        res.status(500);
+        res.status(700);
     }
 });
 
