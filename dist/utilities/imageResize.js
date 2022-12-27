@@ -14,9 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const sharp_1 = __importDefault(require("sharp"));
+const removeExtension_1 = __importDefault(require("./removeExtension"));
 const imageResize = (name, width, height) => __awaiter(void 0, void 0, void 0, function* () {
     const originImage = path_1.default.join(__dirname, '../../assets/uploads', `${name}`);
-    const resizedImage = path_1.default.join(__dirname, '../../assets/resizedImages/', `new${width}x${height}${name}`);
+    const resizedImage = path_1.default.join(__dirname, '../../assets/resizedImages', `${(0, removeExtension_1.default)(name)}-${width}x${height}.jpg`);
     try {
         yield (0, sharp_1.default)(originImage)
             .resize({

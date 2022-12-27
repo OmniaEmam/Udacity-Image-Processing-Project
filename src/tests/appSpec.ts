@@ -1,23 +1,84 @@
 import app from '../app';
 import path from 'path';
 import supertest from 'supertest';
+import fs from 'fs';
+import removeExtension from '../utilities/removeExtension';
 
 const request = supertest(app);
+
 
 // Test endpoint responses
 describe('Test endpoint responses', () => {
   it('should return 200 status code', async () => {
     const response = await request.get('/api/uploads');
-      expect(response.status).toEqual(200);
-    });
+    expect(response.status).toEqual(200);
+  });
+});
+
+
+describe('Test endpoint response', () => {
+  it('should return 200 status code', async () => {
+    const response = await request.get('/api/uploads');
+    expect(response.status).toBe(200);
+  });
+});
+
+
+
+// Test for image processing 
+describe(' test for image processing ', () => {
+  const imageName = 'palmtunnel.jpg';
+  const imageWidth = 400;
+  const imageHeight = 400;
+  const fileName: string = path.join(__dirname, '../../assets/resizedImages',
+    `${removeExtension(imageName)}-${imageWidth}x${imageHeight}.jpg`);
+
+
+  // First , Resize image    
+  it('First , Resize image when it does not exist && not include an error', async () => {
+    await request.get(
+      `/api/uploads?name=${imageName}&width=${imageWidth}&height=${imageHeight}`
+    );
+    expect(fs.existsSync(fileName)).toBeTrue();
   });
 
-  describe('Test endpoint response', () => {
-    it('should return 200 status code', async () => {
-      const response = await request.get('/api/uploads');
-      expect(response.status).toBe(200);
-    });
+
+
+  // Second , image include error  
+  it('Second , When image name include error', async () => {
+    const response = await request.get(
+      `/api/uploads?name=KKK&width=${imageWidth}&height=${imageHeight}`
+    );
+    expect(response.text).toBe(
+      'There is an error , please make sure of image name'
+    );
   });
+
+
+
+  // Third , image ialready exist  
+  it('Third , When The image is already exist', async () => {
+    const response = await request.get(
+      `/api/uploads?name=${imageName}&width=100&height=100`
+    );
+    expect(response.text).toBe(
+      'the image already exist in /assets/resizedImages'
+    );
+  });
+
+
+
+  // Forth , height or width not correct
+  it('Forth , When the height or width not correct', async () => {
+    const response = await request.get(
+      `/api/uploads?name=${imageName}&width=kkk&height=${imageHeight}`
+    );
+    expect(response.text).toBe(
+      'The height and width are not correct, please make sure of image name height and width'
+    );
+  });
+});
+
 
 // Test the Image processing endpoint
 describe('Test that the Resized file is generated', () => {
@@ -25,6 +86,7 @@ describe('Test that the Resized file is generated', () => {
     request.post('../assets/resizedImages').expect(200);
   });
 });
+
 
 // Test the path of save image has called
 describe('Test the path of save image has called', function () {
@@ -34,6 +96,7 @@ describe('Test the path of save image has called', function () {
     });
   });
 });
+
 
 // Test the Query of image has Matched
 describe('Test the path of save image has called', function () {
@@ -46,6 +109,7 @@ describe('Test the path of save image has called', function () {
     });
   });
 });
+
 
 //Test the Images
 

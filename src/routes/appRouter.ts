@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { checkValid, reqQquery } from '../utilities/checkValid';
 import imageResize from '../utilities/imageResize';
+import removeExtension from '../utilities/removeExtension';
 
 const appRouter = express.Router();
 
@@ -14,13 +15,15 @@ appRouter.get('/uploads', async (req: Request, res: Response): Promise<void> => 
         const imageWidth = Number(req.query.width);
         const imageHeight = Number(req.query.height);
 
-        const fileName: string = path.join(__dirname, '../../assets/resizedImages/', `new${imageWidth}x${imageHeight}${imageName}`);
+        const fileName: string = path.join(__dirname, '../../assets/resizedImages', `${removeExtension(imageName)}-${imageWidth}x${imageHeight}.jpg`);
+        const originImage = path.join(__dirname, '../../assets/uploads', `${imageName}`);
         if (!fs.existsSync(fileName)) {
             const newImage = await imageResize(imageName,imageWidth,imageHeight);
 
-            if (!String(newImage).includes('Error')) 
+            if (fs.existsSync(originImage)) 
             {
             res.sendFile(newImage);
+            console.log('the image saved in /assets/resizedImages');
             res.status(200);
             }
             else
@@ -31,8 +34,10 @@ appRouter.get('/uploads', async (req: Request, res: Response): Promise<void> => 
             }
         }
         else if (fs.existsSync(fileName)){
-            res.send('the image already exist');
-            console.log('the image already exist');
+            
+            res.sendFile(fileName);
+            res.send('the image already exist in /assets/resizedImages');
+            console.log('the image already exist /assets/resizedImages');
             res.status(500);
         }
     }

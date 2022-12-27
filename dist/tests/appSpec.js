@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("../app"));
 const path_1 = __importDefault(require("path"));
 const supertest_1 = __importDefault(require("supertest"));
+const fs_1 = __importDefault(require("fs"));
+const removeExtension_1 = __importDefault(require("../utilities/removeExtension"));
 const request = (0, supertest_1.default)(app_1.default);
 describe('Test endpoint responses', () => {
     it('should return 200 status code', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,6 +28,28 @@ describe('Test endpoint response', () => {
     it('should return 200 status code', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/api/uploads');
         expect(response.status).toBe(200);
+    }));
+});
+describe(' test for image processing ', () => {
+    const imageName = 'palmtunnel.jpg';
+    const imageWidth = 400;
+    const imageHeight = 400;
+    const fileName = path_1.default.join(__dirname, '../../assets/resizedImages', `${(0, removeExtension_1.default)(imageName)}-${imageWidth}x${imageHeight}.jpg`);
+    it('First , Resize image when it does not exist && not include an error', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get(`/api/uploads?name=${imageName}&width=${imageWidth}&height=${imageHeight}`);
+        expect(fs_1.default.existsSync(fileName)).toBeTrue();
+    }));
+    it('Second , When image name include error', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get(`/api/uploads?name=KKK&width=${imageWidth}&height=${imageHeight}`);
+        expect(response.text).toBe('There is an error , please make sure of image name');
+    }));
+    it('Third , When The image is already exist', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get(`/api/uploads?name=${imageName}&width=100&height=100`);
+        expect(response.text).toBe('the image already exist in /assets/resizedImages');
+    }));
+    it('Forth , When the height or width not correct', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get(`/api/uploads?name=${imageName}&width=kkk&height=${imageHeight}`);
+        expect(response.text).toBe('The height and width are not correct, please make sure of image name height and width');
     }));
 });
 describe('Test that the Resized file is generated', () => {
